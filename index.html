@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Lucas | Bot Developer & Esports Operations</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root{
+      --bg:#050712; --card:#0f172a; --muted:#9ca3af; --text:#f9fafb;
+      --accent:#4f46e5; --accent-2:#06b6d4; --glass: rgba(255,255,255,0.03);
+      --radius:14px; --shadow: 0 18px 40px rgba(0,0,0,0.55); --ease:cubic-bezier(.16,.84,.24,1);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;}
+    html,body{height:100%}
+    body{
+      background: radial-gradient(circle at 10% 10%, rgba(79,70,229,0.06), transparent 10%), linear-gradient(180deg,#020617 0%, #000 100%);
+      color:var(--text); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; line-height:1.5; padding:28px;
+    }
+    a{color:inherit;text-decoration:none}
+    .page{max-width:1100px;margin:0 auto;padding:18px}
+
+    /* Header */
+    header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:28px}
+    .logo{font-weight:700;letter-spacing:0.12em;color:var(--muted)}
+    nav{display:flex;gap:14px}
+    nav a{color:var(--muted);font-size:0.92rem;padding:8px;border-radius:10px;transition:all .18s var(--ease)}
+    nav a:hover, nav a:focus{color:var(--text);transform:translateY(-3px);box-shadow:0 8px 20px rgba(79,70,229,0.12)}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;margin-bottom:48px}
+    .hero-title{font-size:2.4rem;font-weight:800;margin-bottom:8px;letter-spacing:-0.01em}
+    .hero-sub{color:var(--muted);max-width:560px;margin-bottom:18px}
+    .tags{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+    .tag{background:var(--glass);padding:8px 12px;border-radius:999px;color:var(--muted);font-size:0.85rem;border:1px solid rgba(148,163,184,0.04);transition:transform .12s var(--ease)}
+    .tag:hover{transform:translateY(-4px);color:var(--text)}
+    .actions{display:flex;gap:12px;margin-bottom:12px}
+    .btn{padding:10px 16px;border-radius:999px;border:1px solid transparent;cursor:pointer;font-weight:700;transition:all .16s var(--ease)}
+    .btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:white;box-shadow:0 12px 30px rgba(79,70,229,0.28)}
+    .btn-primary:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(79,70,229,0.45)}
+    .btn-ghost{background:transparent;border:1px solid rgba(148,163,184,0.08);color:var(--muted)}
+    .btn-ghost:hover{color:var(--text);transform:translateY(-3px);border-color:rgba(79,70,229,0.35)}
+
+    .hero-visual{position:relative;height:300px;border-radius:20px;background:linear-gradient(180deg, rgba(79,70,229,0.06), transparent);padding:18px;box-shadow:var(--shadow);overflow:hidden}
+    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:14px;border-radius:14px;border:1px solid rgba(148,163,184,0.04);margin-bottom:12px;transition:transform .18s var(--ease)}
+    .hero-card:hover{transform:translateY(-6px)}
+    .hero-orbit{position:absolute;inset:0;opacity:0.45;mix-blend-mode:screen;background:
+      radial-gradient(circle at 10% 10%, rgba(6,182,212,0.08), transparent 8%),
+      radial-gradient(circle at 90% 90%, rgba(79,70,229,0.08), transparent 12%);pointer-events:none}
+
+    /* Sections */
+    section{margin-bottom:44px}
+    .section-label{font-size:0.75rem;text-transform:uppercase;color:var(--muted);letter-spacing:0.14em;margin-bottom:6px}
+    .section-title{font-size:1.4rem;font-weight:700;margin-bottom:10px}
+    .section-sub{color:var(--muted);margin-bottom:18px;max-width:720px}
+
+    .grid{display:grid;gap:16px}
+    .grid-2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    .card{background:var(--card);padding:16px;border-radius:12px;border:1px solid rgba(148,163,184,0.04);box-shadow:0 10px 30px rgba(0,0,0,0.45);transition:transform .18s var(--ease), box-shadow .18s var(--ease)}
+    .card:hover{transform:translateY(-6px);box-shadow:0 22px 50px rgba(0,0,0,0.6)}
+    .card-title{font-weight:700;margin-bottom:6px}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.02);color:var(--muted);border:1px solid rgba(148,163,184,0.04);font-size:0.82rem;transition:transform .12s var(--ease)}
+    .pill:hover{transform:translateY(-4px);color:var(--text)}
+
+    /* Timeline */
+    .timeline{border-left:1px solid rgba(148,163,184,0.04);padding-left:18px}
+    .timeline-item{position:relative;margin-bottom:12px;padding-left:14px}
+    .timeline-item::before{content:"";position:absolute;left:-8px;top:8px;width:10px;height:10px;border-radius:999px;background:var(--accent);box-shadow:0 0 0 6px rgba(79,70,229,0.08)}
+
+    /* Contact */
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .contact-label{font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px}
+    input,textarea{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(148,163,184,0.04);background:rgba(255,255,255,0.02);color:var(--text);outline:none;transition:box-shadow .12s var(--ease), border-color .12s var(--ease)}
+    input:focus,textarea:focus{box-shadow:0 6px 20px rgba(79,70,229,0.08);border-color:var(--accent)}
+    textarea{min-height:110px;resize:vertical}
+
+    /* Footer */
+    footer{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:18px;border-top:1px solid rgba(31,41,55,0.9);color:var(--muted);font-size:0.85rem}
+    .socials{display:flex;gap:12px}
+    .social{padding:8px;border-radius:8px;color:var(--muted);transition:transform .12s var(--ease), color .12s var(--ease)}
+    .social:hover{transform:translateY(-4px);color:var(--text)}
+
+    /* Focus outlines for accessibility */
+    :focus{outline:3px solid rgba(79,70,229,0.18);outline-offset:3px;border-radius:8px}
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{transition:none!important;animation:none!important}
+    }
+
+    /* Responsive */
+    @media(max-width:980px){
+      .hero{grid-template-columns:1fr;gap:18px}
+      .hero-visual{order:-1;height:220px}
+      .contact-grid{grid-template-columns:1fr}
+      header{flex-direction:column;align-items:flex-start;gap:12px}
+    }
+  </style>
+</head>
+<body>
+  <div class="page" id="page-root">
+    <header>
+      <div class="logo">LUCAS</div>
+      <nav aria-label="Primary navigation">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#experience" class="nav-link">Experience</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- HERO -->
+      <section class="hero" id="hero">
+        <div>
+          <div class="hero-title">Bot Developer & Esports Operations</div>
+          <div class="hero-sub">Reliable esports operations specialist and bot developer with four years of experience supporting competitive organizations, managing staff teams, and maintaining structured, high-functioning communities.</div>
+
+          <div class="tags" aria-hidden="true">
+            <span class="tag">Executive & Leadership Support</span>
+            <span class="tag">Community & Staff Management</span>
+            <span class="tag">Bot Development & Automation</span>
+            <span class="tag">Web Development</span>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-primary" data-scroll="#experience">View Experience</button>
+            <button class="btn btn-ghost" data-scroll="#contact">Contact Me</button>
+          </div>
+
+          <div style="display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:0.9rem">
+            <div style="background:rgba(255,255,255,0.02);padding:8px 12px;border-radius:10px">4+ Years Experience</div>
+            <div style="background:rgba(255,255,255,0.02);padding:8px 12px;border-radius:10px">Esports Operations & Staff Systems</div>
+            <div style="background:rgba(255,255,255,0.02);padding:8px 12px;border-radius:10px">Bot & Web Development</div>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-orbit"></div>
+          <div class="hero-card" style="margin-top:6px">
+            <div style="font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em">Profile</div>
+            <div style="font-weight:800;font-size:1.05rem;margin-top:6px">Lucas</div>
+            <div style="color:var(--muted);margin-top:6px">Bot Developer • Esports Operations • Community & Staff Management</div>
+            <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+              <div style="background:rgba(255,255,255,0.02);padding:6px 8px;border-radius:999px;font-size:0.78rem;color:var(--muted)">Synex Esports Founder</div>
+              <div style="background:rgba(255,255,255,0.02);padding:6px 8px;border-radius:999px;font-size:0.78rem;color:var(--muted)">High-Availability Support</div>
+            </div>
+          </div>
+
+          <div class="hero-card" style="display:flex;flex-direction:column;gap:6px">
+            <div style="font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em">Contact</div>
+            <div style="color:var(--muted)">Discord: <strong style="color:var(--text)">lucasmgmt</strong></div>
+            <div style="color:var(--muted)">Email: <strong style="color:var(--text)">sdfs47023@gmail.com</strong></div>
+            <div style="color:var(--muted)">Twitter/X: <strong style="color:var(--text)">@lucasmgmt1</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABOUT -->
+      <section id="about" class="reveal-section">
+        <div class="section-label">About</div>
+        <div class="section-title">About Lucas</div>
+        <div class="section-sub">Across every organization I’ve worked with, I’ve built a reputation for being consistent, professional, and dependable. I combine technical development with community and staff management to keep teams organized, efficient, and structured.</div>
+      </section>
+
+      <!-- SKILLS -->
+      <section id="skills" class="reveal-section">
+        <div class="section-label">Skills</div>
+        <div class="section-title">Core Competencies & Technical Skills</div>
+        <div class="section-sub">A blend of executive support, technical development, and community operations designed for high-functioning esports organizations and online communities.</div>
+
+        <div class="grid grid-2" style="margin-bottom:18px">
+          <div class="card" id="competencies">
+            <div class="card-title">Core Competencies</div>
+            <ul style="margin-top:8px;padding-left:18px;color:var(--muted)">
+              <li>Executive & leadership support</li>
+              <li>Community and staff management</li>
+              <li>Bot development & automation</li>
+              <li>Web development</li>
+            </ul>
+          </div>
+
+          <div class="card" id="technical">
+            <div class="card-title">Technical & Operational Skills</div>
+            <ul style="margin-top:8px;padding-left:18px;color:var(--muted)">
+              <li>Bot development (Discord.js and related technologies)</li>
+              <li>Web development</li>
+              <li>Community moderation</li>
+              <li>Staff coordination & training</li>
+              <li>Ticket systems & workflow management</li>
+              <li>Server structure & optimization</li>
+              <li>Professional communication</li>
+              <li>High-availability support</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Focus Areas</div>
+          <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+            <span class="pill">Discord Bot Systems</span>
+            <span class="pill">Esports Operations</span>
+            <span class="pill">Staff Structures</span>
+            <span class="pill">Ticket & Workflow Design</span>
+            <span class="pill">Community Safety & Moderation</span>
+            <span class="pill">Web Experiences</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- EXPERIENCE -->
+      <section id="experience" class="reveal-section">
+        <div class="section-label">Experience</div>
+        <div class="section-title">Founding, Leadership & Management</div>
+        <div class="section-sub">Roles across founding, executive leadership, and technical management within esports organizations and online communities.</div>
+
+        <div class="card">
+          <div class="timeline">
+            <div style="margin-bottom:14px">
+              <div style="font-weight:700;color:var(--muted);text-transform:uppercase;font-size:0.82rem;margin-bottom:8px">Founding & Ownership</div>
+              <div class="timeline-item">Founder – Synex Esports</div>
+              <div class="timeline-item">Co-Owner – Synex Scrims</div>
+              <div class="timeline-item">Co-Creator (Offered) – T9 Esports</div>
+              <div class="timeline-item">Co-Founder (Offered) – 1k Esports</div>
+            </div>
+
+            <div style="margin-bottom:14px">
+              <div style="font-weight:700;color:var(--muted);text-transform:uppercase;font-size:0.82rem;margin-bottom:8px">Executive & Leadership</div>
+              <div class="timeline-item">Vice President – 3Star Esports</div>
+              <div class="timeline-item">Executive – LORVAIN Esports</div>
+              <div class="timeline-item">Executive – Beneath Reality</div>
+              <div class="timeline-item">Head Staff / Admin – FaTaL Esports</div>
+              <div class="timeline-item">Chief Relations Officer – 1k Esports</div>
+            </div>
+
+            <div>
+              <div style="font-weight:700;color:var(--muted);text-transform:uppercase;font-size:0.82rem;margin-bottom:8px">Management & Technical</div>
+              <div class="timeline-item">Management – Team Pulsar</div>
+              <div class="timeline-item">Web Developer – RBL</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact" class="reveal-section">
+        <div class="section-label">Contact</div>
+        <div class="section-title">Let’s Work Together</div>
+        <div class="section-sub">Open to roles and collaborations in esports operations, bot development, and community & staff management.</div>
+
+        <div class="contact-grid">
+          <div>
+            <div style="margin-bottom:12px">
+              <div class="contact-label">Discord</div>
+              <div style="color:var(--text)">lucasmgmt</div>
+            </div>
+            <div style="margin-bottom:12px">
+              <div class="contact-label">Email</div>
+              <div><a href="mailto:sdfs47023@gmail.com" style="color:var(--text)">sdfs47023@gmail.com</a></div>
+            </div>
+            <div>
+              <div class="contact-label">Twitter / X</div>
+              <div><a href="https://x.com/lucasmgmt1" target="_blank" rel="noopener noreferrer" style="color:var(--text)">@lucasmgmt1</a></div>
+            </div>
+          </div>
+
+          <div>
+            <form id="contactForm" novalidate>
+              <label class="contact-label" for="name">Name</label>
+              <input id="name" name="name" type="text" placeholder="Your name" required />
+              <label class="contact-label" for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="you@example.com" required />
+              <label class="contact-label" for="message">Message</label>
+              <textarea id="message" name="message" placeholder="Tell me about your project or role..." required></textarea>
+              <div style="margin-top:10px;display:flex;gap:10px">
+                <button class="btn btn-primary" type="submit">Send Message</button>
+                <button class="btn btn-ghost" type="reset">Reset</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div>© <span id="year"></span> Lucas. All rights reserved.</div>
+      <div class="socials" aria-label="Social links">
+        <div class="social" role="link" tabindex="0" aria-label="Discord">Discord</div>
+        <a class="social" href="mailto:sdfs47023@gmail.com">Email</a>
+        <a class="social" href="https://x.com/lucasmgmt1" target="_blank" rel="noopener noreferrer">Twitter/X</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Respect reduced motion preference
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Smooth scroll with easing (no sound)
+    function smoothScrollTo(selector){
+      const el = document.querySelector(selector);
+      if(!el) return;
+      const offset = 18;
+      const targetY = el.getBoundingClientRect().top + window.scrollY - offset;
+      const startY = window.scrollY;
+      const distance = targetY - startY;
+      const duration = reducedMotion ? 0 : 650;
+      if(duration === 0){
+        window.scrollTo(0, targetY);
+        return;
+      }
+      let startTime = null;
+      function step(ts){
+        if(!startTime) startTime = ts;
+        const t = Math.min(1, (ts - startTime) / duration);
+        const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
+        window.scrollTo(0, startY + distance * eased);
+        if(t < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    // Attach nav link handlers (no sound)
+    document.querySelectorAll('.nav-link, [data-scroll]').forEach(el=>{
+      el.addEventListener('click', (e)=>{
+        const href = el.getAttribute('href') || el.getAttribute('data-scroll');
+        if(!href || !href.startsWith('#')) return;
+        e.preventDefault();
+        smoothScrollTo(href);
+      });
+      el.addEventListener('keydown', (e)=>{
+        if(e.key === 'Enter' || e.key === ' '){
+          e.preventDefault();
+          smoothScrollTo(el.getAttribute('href') || el.getAttribute('data-scroll'));
+        }
+      });
+    });
+
+    // Section reveal with stagger (visual only)
+    if(!reducedMotion){
+      const sections = document.querySelectorAll('.reveal-section');
+      const obs = new IntersectionObserver((entries, o)=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){
+            const el = entry.target;
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(18px)';
+            el.style.transition = 'opacity 420ms var(--ease), transform 420ms var(--ease)';
+            requestAnimationFrame(()=> {
+              el.style.opacity = 1;
+              el.style.transform = 'translateY(0)';
+            });
+            o.unobserve(el);
+          }
+        });
+      }, {threshold: 0.12});
+      sections.forEach(s => obs.observe(s));
+    } else {
+      document.querySelectorAll('.reveal-section').forEach(el=>{
+        el.style.opacity = 1;
+        el.style.transform = 'none';
+      });
+    }
+
+    // Contact form safe handling
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      const message = form.message.value.trim();
+      if(!name || !email || !message){
+        alert('Please complete all fields before sending.');
+        return;
+      }
+      alert('Thanks! Your message has been noted. Replace this handler with your backend integration.');
+      form.reset();
+    });
+
+    // Smooth hash anchor handling
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const href = a.getAttribute('href');
+        if(href.length > 1){
+          e.preventDefault();
+          smoothScrollTo(href);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+HTML
+
+# 4) Stage, commit, and push to GitHub
+git add index.html
+git commit -m "Add site index.html (Lucas website)"
+git push -u origin main
